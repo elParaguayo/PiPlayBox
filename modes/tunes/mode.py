@@ -27,8 +27,8 @@ class PiPlayBoxMode(BaseMode):
                             "sound": "makeright.ogg"},
                         5: {"text": "I wanna stay\nwith you",
                             "sound": "staywithyou.ogg"},
-                        6: {"text": None,
-                            "sound": None},
+                        6: {"text": "Hey baby, I think\nI wanna marry you",
+                            "sound": "marryyou.ogg"},
                         7: {"text": None,
                             "sound": None}}
         self.modename = "Wait... wait..."
