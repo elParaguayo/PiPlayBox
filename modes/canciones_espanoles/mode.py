@@ -63,23 +63,3 @@ class PiPlayBoxMode(BaseMode):
     def event(self, event):
         self.Mute()
 
-    def Disco(self):
-        d = self.display
-        colours = [d.RED, d.BLUE, d.GREEN, d.WHITE, 
-                   d.YELLOW, d.VIOLET, d.TEAL]
-
-        sleep(0.5)
-        print self.mixer.music.get_busy()
-
-        while (self.mixer.get_init() and self.mixer.music.get_busy()):
-            x = randint(5,15)
-            self.display.backlight(choice(colours))
-            z = 0
-
-            while z < x and (self.mixer.get_init() and 
-                           self.mixer.music.get_busy()):
-                sleep(0.05)
-                z += 1
-
-        self.display.backlight(self.modecolour)
-
