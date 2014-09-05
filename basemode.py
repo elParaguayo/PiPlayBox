@@ -28,6 +28,8 @@ class BaseMode(object):
         self.mixer.music.set_endevent()
         self.mixer.music.set_endevent(pygame.USEREVENT)
 
+        self.isPlaying = False
+
         #self.clearEvents()
 
         self.modename = "Default Mode"

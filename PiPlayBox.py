@@ -35,7 +35,7 @@ import pygame
 import RPi.GPIO as GPIO
 
 from speaker import Speaker
-#from trafficlight import TrafficLight 
+from trafficlight import TrafficLight 
 from display import Display
 
 # PiPlayBox modes
@@ -44,8 +44,9 @@ from modes.canciones_espanoles.mode import PiPlayBoxMode as SpanishSongs
 from modes.tunes.mode import PiPlayBoxMode as Tunes
 from modes.radio.mode import PiPlayBoxMode as Radio
 from modes.underground.mode import PiPlayBoxMode as Underground
+from modes.lights.mode import PiPlayBoxMode as TLights
 
-my_modes = {1: TrainMode,
+my_modes = {1: TLights,
             2: SpanishSongs,
             3: Tunes,
             4: Radio,
@@ -64,7 +65,7 @@ class PiPlayBox(object):
         self.screentimeout = 30
 
         # Time in seconds until box turns off if no activity
-        self.powertimeout = 300
+        self.powertimeout = 600
 
         self.display.Update("Setting up\nbuttons...")
 
@@ -116,9 +117,9 @@ class PiPlayBox(object):
         pygame.display.set_mode((1,1))
         pygame.mixer.init(frequency=22050, channels=1, buffer=1024) 
         
-        #self.trafficlight = TrafficLight(self.__redpin,
-        #                                 self.__yellowpin,
-        #                                 self.__greenpin)
+        self.trafficlight = TrafficLight(self.__redpin,
+                                         self.__yellowpin,
+                                         self.__greenpin)
         #self.automute = True
         #self.startAutoMute()
 
@@ -153,6 +154,7 @@ class PiPlayBox(object):
            self.mode = my_modes[mode](display=self.display,
                                       buttons=self.GPIOpins["buttons"],
                                       speaker=self.speaker,
+                                      trafficlight=self.trafficlight,
                                       mixer=pygame.mixer)
 
     def __getModes(self):
@@ -198,8 +200,9 @@ class PiPlayBox(object):
 
             if a == (self.screentimeout * 10):
                 self.display.Off()
-            #elif a == (self.powertimeout * 10):
-            #    self.quit = True
+            elif a == (self.powertimeout * 10):
+                self.poweroff = True
+                self.quit = True
 
             sleep(0.1)
 
