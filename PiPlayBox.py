@@ -46,11 +46,12 @@ from modes.radio.mode import PiPlayBoxMode as Radio
 from modes.underground.mode import PiPlayBoxMode as Underground
 from modes.lights.mode import PiPlayBoxMode as TLights
 
-my_modes = {1: TLights,
+my_modes = {1: TrainMode,
             2: SpanishSongs,
             3: Tunes,
             4: Radio,
-            5: Underground}
+            5: Underground,
+            6: TLights}
 
 class PiPlayBox(object):
 
@@ -230,6 +231,8 @@ class PiPlayBox(object):
                 d += 1
             elif self.singlePin(self.__button5):
                 e += 1
+            elif self.singlePin(self.__button6):
+                f += 1
             elif (self.restart or self.poweroff) and not self.inputList(self.GPIOpins["buttons"]):
                 self.quit = True
             else:
@@ -258,6 +261,8 @@ class PiPlayBox(object):
                 self.switchMode(4)
             elif e == 20:
                 self.switchMode(5)
+            elif f == 20:
+                self.switchMode(6)
             sleep(0.1)
 
     def inputList(self, pins):
